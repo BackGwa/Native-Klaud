@@ -28,17 +28,17 @@ const GetmealZone = (data) => {
 /** mealZone => 급식 정보를 파싱하여 반환합니다. */
 const mealZone = (data) => {
   let mealzone = GetmealZone(data);
-  let result = mealzone !== 'None' ? [...data['menu'][0][mealzone]] : [''];
-
+  result = mealzone !== 'None' ? [...data['menu'][0][mealzone]] : [''];
   return result;
 };
 
 /** Meal_Request => 파라미터에 입력 된 값을 기반으로 API에 요청하고 그 정보를 파싱하여 반환합니다. */
 const Meal_Request = async (schoolType, schoolCode, date = nowdate()) => {
-  const API = `https://schoolmenukr.ml/api/${schoolType}/${schoolCode}?year=${date[0]}&month=${date[1]}&date=${date[2]}&allergy=hidden`;
+  const API = `https://school-api-a5575.firebaseapp.com/api/${schoolType}/${schoolCode}?year=${date[0]}&month=${date[1]}&date=${date[2]}&allergy=hidden`;
   const response = await fetch(API);
   const data = await response.json();
   const result = mealZone(data);
+
   MealZone_ChangeText(GetmealZone(data));
 
   return result;
@@ -66,7 +66,7 @@ const MealZone_ChangeText = (mealZone) => {
       mainText.innerHTML = '오늘의 점심은'
       break;
     case 'dinner':
-      subText.innerHTML = '오늘의 마지막을 장식할'
+      subText.innerHTML = '마지막을 장식할'
       mainText.innerHTML = '오늘의 저녁은'
       break;
   }
